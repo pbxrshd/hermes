@@ -165,6 +165,7 @@ body#raptors {
   text-align: right;
   vertical-align: top;
   letter-spacing: 2px;
+  text-transform: capitalize;
 }
 #raptor_detail .control-col {
   display: inline-block;
@@ -176,6 +177,7 @@ body#raptors {
   text-align: center;
   font-weight: bold;
   min-height: 24px;
+  text-transform: capitalize;
 }
 
 #log_control_modal {
@@ -235,6 +237,7 @@ body#raptors {
   position: relative;
   padding: 6px 0px 2px 42px;
   cursor: pointer;
+  text-transform: capitalize;
 }
 #log_control_modal li.item-check {
   font-weight: bold;
