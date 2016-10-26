@@ -249,3 +249,14 @@ body#raptors {
   left: 2px;
   opacity: 0.6;
 }
+
+#schedule div.entry {
+  border: 1px solid silver;
+  margin: 4px;
+}
+#schedule div.current {
+  background-color: silver;
+  border: 2px solid black;
+  margin: 4px;
+  font-weight: bold;
+}

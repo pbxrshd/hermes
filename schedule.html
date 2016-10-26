@@ -9,26 +9,26 @@
   <script src="res/js/site.js"></script>
 
 </head>
-<body>
+<body id="schedule">
 
   <div id="main_header" class="fixed-header">
-    <div class="header-left"><img src="res/img/main-menu.png" id="main_menu_icon" onclick="UI.clicked('main_menu_icon')" class="header-icon" /></div>
+    <div class="header-left"><img src="res/img/main-menu.png" id="main_menu_icon" onclick="UI.event('main_menu_icon')" class="header-icon" /></div>
     <div class="header-center">SCHEDULE</div>
     <div class="header-right"></div>
   </div>
 
   <div class="body-section">
-    <h1>Schedule Page</h1>
-    <h2>(to be implemented...)</h2>
+    <div class="sub">Week of <span id="from_day"></span> to <span id="to_day"></span></div>
+    <div class="schedule-section"></div>
 
-  <div id="main_menu" class="hide" onclick="UI.clicked('main_menu_item', event)">
-    <a href="#" class="main-menu-item">Raptors</a>
-    <a href="#" class="main-menu-item">Reports</a>
-    <a href="#" class="main-menu-item">Settings</a>
-    <a href="#" class="main-menu-item">Help</a>
-  </div>
+    <div id="main_menu" class="hide" onclick="UI.event('main_menu_item', event)">
+      <a href="#" class="main-menu-item">Raptors</a>
+      <a href="#" class="main-menu-item">Reports</a>
+      <a href="#" class="main-menu-item">Settings</a>
+      <a href="#" class="main-menu-item">Help</a>
+    </div>
 
-</div><!-- body-section  -->
+  </div><!-- body-section  -->
 
 <script>
   UI.init("Schedule");

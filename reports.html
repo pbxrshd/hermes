@@ -12,7 +12,7 @@
 <body>
 
   <div id="main_header" class="fixed-header">
-    <div class="header-left"><img src="res/img/main-menu.png" id="main_menu_icon" onclick="UI.clicked('main_menu_icon')" class="header-icon" /></div>
+    <div class="header-left"><img src="res/img/main-menu.png" id="main_menu_icon" onclick="UI.event('main_menu_icon')" class="header-icon" /></div>
     <div class="header-center">Reports</div>
     <div class="header-right"></div>
   </div>
@@ -21,7 +21,7 @@
     <h1>Reports Page</h1>
     <h2>(to be implemented...)</h2>
 
-  <div id="main_menu" class="hide" onclick="UI.clicked('main_menu_item', event)">
+  <div id="main_menu" class="hide" onclick="UI.event('main_menu_item', event)">
     <a href="#" class="main-menu-item">Raptors</a>
     <a href="#" class="main-menu-item">Schedule</a>
     <a href="#" class="main-menu-item">Settings</a>
