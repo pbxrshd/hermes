@@ -17,8 +17,12 @@
     <div class="header-right"></div>
   </div>
 
-  <div class="body-section">
-    <div class="sub">Week of <span id="from_day"></span> to <span id="to_day"></span></div>
+  <div id="body_section">
+    <div id="body_top"></div>
+    <div class="body-top-pad"></div>
+    <div class="sub-left text-icon text-icon-active" onclick="UI.event('schedule_view_change', 1);">&lt;</div>
+    <div class="sub-center"></div>
+    <div class="sub-right text-icon text-icon-inactive" onclick="UI.event('schedule_view_change', -1);">&gt;</div>
     <div class="schedule-section"></div>
 
     <div id="main_menu" class="hide" onclick="UI.event('main_menu_item', event)">
@@ -28,7 +32,7 @@
       <a href="#" class="main-menu-item">Help</a>
     </div>
 
-  </div><!-- body-section  -->
+  </div><!-- #body_section  -->
 
 <script>
   UI.init("Schedule");

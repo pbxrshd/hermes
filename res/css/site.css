@@ -53,6 +53,46 @@ div.body-section {
   padding-top: 56px;
 }
 
+div.body-top-pad {
+  padding-top: 56px;
+}
+
+
+div.sub-left {
+  display: inline-block;
+}
+div.sub-center {
+  display: inline-block;
+  text-align: center;
+}
+div.sub-right {
+  display: inline-block;
+}
+
+.text-icon {
+  font-size: 140%;
+  line-height: 18px;
+  vertical-align: baseline;
+}
+.text-icon-active {
+  color: #1e90ff;
+  cursor: pointer;
+}
+.text-icon-inactive {
+  color: #c0c0c0;
+}
+
+input[type=radio] + label {
+  color: #ccc;
+  font-style: italic;
+}
+input[type=radio]:checked + label {
+  color: #1e90ff;
+  font-style: normal;
+  font-weight: bold;
+}
+
+
 #main_menu {
   background-color: #191818;
   width: 50%;
@@ -103,7 +143,7 @@ body#raptors {
   text-align: right;
   color: #696969;
   letter-spacing: 2px;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid #c0c0c0;
 }
 #raptors div.card div.l2 {
   margin: 0px 0px 0px 132px;
@@ -116,7 +156,7 @@ body#raptors {
 
 /* #raptor-detail view */
 #raptor_detail div.body-header {
-  border: 1px solid silver;
+  border: 1px solid #c0c0c0;
   border-radius: 6px;
   margin: 8px 0px 20px 12px;
   width: 90%;
@@ -145,7 +185,7 @@ body#raptors {
   display: inline-block;
   width: 58%;
   font-size: 80%;
-  border-bottom: 1px solid silver;
+  border-bottom: 1px solid #c0c0c0;
   margin: 0px 0px 4px 24px;
 }
 #raptor_detail div.body-header div.header-value {
@@ -251,12 +291,27 @@ body#raptors {
 }
 
 #schedule div.entry {
-  border: 1px solid silver;
+  border: 1px solid #c0c0c0;
   margin: 4px;
 }
 #schedule div.current {
-  background-color: silver;
+  background-color: #c0c0c0;
   border: 2px solid black;
   margin: 4px;
   font-weight: bold;
+}
+
+#settings div.setting-entry {
+  margin: 12px 4px 52px 4px;
+}
+#settings div.setting-label {
+  border-bottom: 1px solid silver;
+}
+#settings div.setting-option {
+  display: inline-block;
+  background-color: #eee;
+  padding: 4px;
+  width: 100px;
+  text-align: center;
+  float: right;
 }

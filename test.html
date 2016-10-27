@@ -11,111 +11,43 @@
   <script>
 
     function init() {
-      var callback = function(evt, dir, phase, swipetype, distance) {
-            var touchreport = '';
-            touchreport += '<b>Dir:</b> ' + dir + '<br />';
-            touchreport += '<b>Phase:</b> ' + phase + '<br />';
-            touchreport += '<b>Swipe Type:</b> ' + swipetype + '<br />';
-            touchreport += '<b>Distance:</b> ' + distance + '<br />';
-            document.querySelector("#touch_surface").innerHTML = touchreport;
-          };
-      SWIPER.init("div.body-section", callback);
-    }
 
-
-  var TEMPORAL = (function() {
-    // "dateRep" is ISO 8601 Complete date: YYYY-MM-DD (eg 1997-07-16)
-    var WEEKDAYS = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
-    var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    //
-    function pad(number) {
-      return (number < 10) ? "0" + number: number;
     }
-    //
-    function toDate(dateOrDateRep) {
-      if (typeof dateOrDateRep === "undefined") {
-        return getToday();
-      }
-      if (typeof dateOrDateRep === "string") {
-        var date = new Date();
-        var dateParts = dateOrDateRep.split("-");
-        date.setFullYear(parseInt(dateParts[0]));
-        date.setMonth(parseInt(dateParts[1]) - 1);
-        date.setDate(parseInt(dateParts[2]));
-        return date;
-      }
-      return dateOrDateRep;
-    }
-    function getDateOffsetted(dateOrDateRep, daysToOffset) {
-      var date = toDate(dateOrDateRep);
-      if (daysToOffset !== 0) {
-        date.setDate(date.getDate() + daysToOffset);
-      }
-      return date;
-    }
-    // formats dateOrDateRep as ISO 8601 Complete date: YYYY-MM-DD (eg 1997-07-16)
-    function format(dateOrDateRep) {
-      var date = toDate(dateOrDateRep);
-      return date.getUTCFullYear() +"-"+ pad(date.getUTCMonth() + 1) +"-"+ pad(date.getUTCDate());
-    }
-    // Tuesday 25 Oct
-    function longFormat(dateOrDateRep) {
-      var date = toDate(dateOrDateRep);
-      return WEEKDAYS[date.getDay()] +" "+ date.getDate() +" "+ MONTHS[date.getMonth()];
-    }
-    function getToday() {
-      return new Date();
-    }
-    function getYesterday(dateOrDateRep) {
-      var date = toDate(dateOrDateRep);
-      return getDateOffsetted(date, -1);
-    }
-    function getTomorrow(dateOrDateRep) {
-      var date = toDate(dateOrDateRep);
-      return getDateOffsetted(date, 1);
-    }
-    //
-    function getWeek(dateOrDateRep) {
-      var date = toDate(dateOrDateRep);
-      var week = [];
-      var dayIndex = date.getDay();
-      var offsetToMondayOfWeek = (dayIndex > 0) ? (1 - dayIndex) : -6;
-      var refDate = getDateOffsetted(date, offsetToMondayOfWeek);
-      [0,1,2,3,4,5,6].forEach(function(e) {
-        week.push(format(refDate));
-        refDate = getDateOffsetted(refDate, 1);
-      });
-      return week;
-    }
-    //
-    function getNextWeek(dateOrDateRep) {
-      return getWeek(getDateOffsetted(dateOrDateRep, 7));
-    }
-    //
-    function getPrevWeek(dateOrDateRep) {
-      return getWeek(getDateOffsetted(dateOrDateRep, -7));
-    }
-    //
-    return {
-      format : format,
-      longFormat : longFormat,
-      today : getToday,
-      yesterday : getYesterday,
-      tomorrow : getTomorrow,
-      thisWeek : getWeek,
-      nextWeek : getNextWeek,
-      prevWeek : getPrevWeek,
-      toDate : toDate
-    }
-  })(); // TEMPORAL
-
 
 
   </script>
+  <style>
+    #test div.setting-entry {
+      margin: 12px 4px 52px 4px;
+    }
+    #test div.setting-label {
+      border-bottom: 1px solid silver;
+    }
+    #test div.setting-option {
+      display: inline-block;
+      background-color: #eee;
+      padding: 4px;
+      width: 100px;
+      text-align: center;
+      float: right;
+    }
+
+    input[type=radio] + label {
+      color: #ccc;
+      font-style: italic;
+    }
+    input[type=radio]:checked + label {
+      color: #1e90ff;
+      font-style: normal;
+      font-weight: bold;
+    }
+
+  </style>
+
 
 
 </head>
-<body>
+<body id="test">
 
   <div id="main_header" class="fixed-header">
     <div class="header-left"><img src="res/img/main-menu.png" id="main_menu_icon" onclick="UI.event('main_menu_icon')" class="header-icon" /></div>
@@ -125,11 +57,17 @@
 
   <div class="body-section">
 
-    <div id="touch_surface" style="width:100%;height:250px;borderx:1px solid black;background:silver;"></div>
+    <div class="setting-entry">
+      <div class="setting-label">UNITS</div>
+      <div class="setting-option"><input type="radio" id="setting_0_0" name="setting_0" checked="checked"/><label for="setting_0_0" class="setting-text">grams</label></div>
+      <div class="setting-option"><input type="radio" id="setting_0_1" name="setting_0"/><label for="setting_0_1" class="setting-text">ounces</label></div>
+    </div>
 
-    <p>
-      body section
-    </p>
+    <div class="setting-entry">
+      <div class="setting-label">SEND SCHEDULE REMINDERS</div>
+      <div class="setting-option"><input type="radio" name="setting_1" id="setting_1_0"/><label for="setting_1_0" class="setting-text">Yes</label></div>
+      <div class="setting-option"><input type="radio" name="setting_1" id="setting_1_1" checked="checked"/><label for="setting_1_1" class="setting-text">No</label></div>
+    </div>
 
 
   <div id="main_menu" class="hide" onclick="UI.event('main_menu_item', event)">

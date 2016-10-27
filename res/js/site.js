@@ -50,6 +50,9 @@
         case "log_item":
           logItemClicked(params);
         break;
+        case "schedule_view_change":
+          setupScheduleView(params);
+        break;
 
         default:
           console.log("unknown id event: " + id);
@@ -67,7 +70,9 @@
       html += "<div class=\"pic\"><img src=\"res/img/raptors/TN_" + id + ".jpg\" class=\"pic\" /></div>";
       html += "<div class=\"l1\">" + DATA.RAPTORS[id].name + "</div>";
       html += "<div class=\"l2\">Last Entry:</div>";
-      html += "<div class=\"l3\">" + getDateFormatted(DATA.LOG[id].date) + "</div>";
+      html += "<div class=\"l3\">";
+      html += ("Today" === DATA.LOG[id].date) ? TEMPORAL.longFormat(TEMPORAL.today()) : TEMPORAL.longFormat(TEMPORAL.yesterday());
+      html += "</div>";
       html += "</div>";
       return html;
     }
@@ -81,7 +86,8 @@
       var temperatures = getTemperatures();
       html("div.body-header div.temp", temperatures.high + " - " + temperatures.low + "&deg;F");
       var logData = DATA.LOG[id];
-      text("div.body-header div.date", getDateFormatted(logData.date));
+      var lastEntry = ("Today" === DATA.LOG[id].date) ? TEMPORAL.longFormat(TEMPORAL.today()) : TEMPORAL.longFormat(TEMPORAL.yesterday());
+      text("div.body-header div.date", lastEntry);
       //
       var logSectionsHtml = "";
       LOG_ATTRS.forEach(function(attr) {
@@ -184,12 +190,12 @@
         ACTIVE_SCHEDULE_WEEK = TEMPORAL.thisWeek();
         var onSwipeCallback = function(evt, dir, phase, swipetype, distance) {
           if (swipetype === "left") {
-            setupScheduleView(-1);
+            UI.event("schedule_view_change", -1);
           } else if (swipetype === "right") {
-            setupScheduleView(+1);
+            UI.event("schedule_view_change", +1);
           }
         };
-        SWIPER.init("div.body-section", onSwipeCallback);
+        SWIPER.init("#body_section", onSwipeCallback);
       }
       //
       if (offset < 0) {
@@ -200,15 +206,16 @@
         ACTIVE_SCHEDULE_WEEK = TEMPORAL.nextWeek(ACTIVE_SCHEDULE_WEEK[0]);
       } else if (offset > 0) {
         if (TEMPORAL.weekContains(ACTIVE_SCHEDULE_WEEK) > -1) {
-          console.log("No previous entries");
+          toast("No previous entries");
           return;
         }
         ACTIVE_SCHEDULE_WEEK = TEMPORAL.prevWeek(ACTIVE_SCHEDULE_WEEK[0]);
       }
       //
-      text("#from_day", TEMPORAL.shortFormat(ACTIVE_SCHEDULE_WEEK[0]));
-      text("#to_day", TEMPORAL.shortFormat(ACTIVE_SCHEDULE_WEEK[6]));
+      var subHeader = TEMPORAL.shortFormat(ACTIVE_SCHEDULE_WEEK[0]) + " to " + TEMPORAL.shortFormat(ACTIVE_SCHEDULE_WEEK[6]);
+      text("#schedule div.sub-center", subHeader);
       html("#schedule div.schedule-section", scheduleEntryHtml(ACTIVE_SCHEDULE_WEEK));
+      document.querySelector("#body_top").scrollIntoView();
     }
     //
     function scheduleEntryHtml(week) {
@@ -216,11 +223,24 @@
       var today = TEMPORAL.format(TEMPORAL.today());
       week.forEach(function(e) {
         html += "<div class=\"entry";
-        if (e === today) {
-          html += " current";
-        }
-        html += "\">" + TEMPORAL.longFormat(e) + "</div>";
+        html += (e === today) ? " current" : "";
+        html += "\">"
+        html += "<div class=\"\">" + TEMPORAL.longFormat(e) + "</div>";
+
+        html += "<div class=\"\">" + getScheduledHtml(getScheduled()) + "</div>";
+
+        html += "</div>";
       });
+      return html;
+    }
+    //
+    function getScheduledHtml(scheduledArray) {
+      var html = "";
+      scheduledArray.forEach(function(e) {
+        html += DATA["PEOPLE"][e]["name"];
+        html += "<img src=\"" + DATA["PEOPLE"][e]["pic"] + "\" />";
+      });
+
       return html;
     }
     //
@@ -627,18 +647,13 @@ function getTemperatures() {
   return {"high": getRandomArbitrary(70,54), "low": getRandomArbitrary(50,39)};
 }
 //
-function getDateFormatted(code) {
-  var formatted = "";
-  var date = new Date();
-  if (code === "Yesterday") {
-    date.setDate(date.getDate() - 1);
-  }
-  formatted += code + " ";
-  formatted += ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][date.getDay()];
-  formatted += " " + date.getDate() + " ";
-  formatted += ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][date.getMonth()];
-  return formatted;
+function getScheduled() {
+  var schedules = [
+    [0,1],[2,3],[1,5,6],[2,4,6],[4],[1],[2],[6],[3,6],[1,3],[5],[1,2,3],[0],[0,2,4],[0,1],[2,6],[1,3,4],[3,5],[1,4],[2,5]
+  ];
+  return schedules[Math.floor(Math.random()*schedules.length)];
 }
+//
 /* services */
 
 
