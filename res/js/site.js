@@ -1,11 +1,11 @@
 
 
   var UI = (function() {
+    // vars holding global state
     var VIEW = "";
     var ACTIVE_LOG_CONTROL= null;
-    var LOG_ATTRS = ["weight","rodent","quail","remains","casts","feces","urates","attitude","cleaning","water","exercise","weather"];
     var ACTIVE_SCHEDULE_WEEK = null;
-
+    // things to perform when entering a view for the first time
     function init(view) {
       VIEW = view;
       switch (VIEW) {
@@ -19,6 +19,9 @@
         case "Schedule":
           setupScheduleView();
         break;
+        case "Reports":
+          setupReportView();
+        break;
         case "raptor_detail":
           if (location.hash.length > 1) {
             setupRaptorDetail(location.hash.substring(1));
@@ -29,7 +32,7 @@
         break;
       }
     }
-
+    // all events (click, swipe, etc.) are routed through here
     function event(id, params) {
       switch (id) {
         case "main_menu_icon":
@@ -53,7 +56,9 @@
         case "schedule_view_change":
           setupScheduleView(params);
         break;
-
+        case "report_view_change":
+          setupReportView(params);
+        break;
         default:
           console.log("unknown id event: " + id);
         break;
@@ -83,19 +88,19 @@
       html("#main_header .header-center", id);
       text("div.body-header div.title", raptorData.name);
       document.querySelector("div.body-header img.pic").src = raptorData.pic;
-      var temperatures = getTemperatures();
+      var temperatures = SERVICE.getTemperatures();
       html("div.body-header div.temp", temperatures.high + " - " + temperatures.low + "&deg;F");
       var logData = DATA.LOG[id];
       var lastEntry = ("Today" === DATA.LOG[id].date) ? TEMPORAL.longFormat(TEMPORAL.today()) : TEMPORAL.longFormat(TEMPORAL.yesterday());
       text("div.body-header div.date", lastEntry);
       //
       var logSectionsHtml = "";
-      LOG_ATTRS.forEach(function(attr) {
+      DATA.LOG_ATTRS.forEach(function(attr) {
         logSectionsHtml += getLogSectionHtml(attr);
       });
       html("#log_sections", logSectionsHtml);
       //
-      LOG_ATTRS.forEach(function(attr) {
+      DATA.LOG_ATTRS.forEach(function(attr) {
         text("#" + attr + " div.control", logData[attr]);
       });
     }
@@ -187,6 +192,7 @@
     //
     function setupScheduleView(offset) {
       if (typeof offset === "undefined" || offset === 0) {
+        // first time into view, setup swipe
         ACTIVE_SCHEDULE_WEEK = TEMPORAL.thisWeek();
         var onSwipeCallback = function(evt, dir, phase, swipetype, distance) {
           if (swipetype === "left") {
@@ -198,8 +204,9 @@
         SWIPER.init("#body_section", onSwipeCallback);
       }
       //
+      var maxDateRep = DATA.SCHEDULE.maxDate;
       if (offset < 0) {
-        if (TEMPORAL.weekContains(ACTIVE_SCHEDULE_WEEK,"2016-12-20") > -1) {
+        if (TEMPORAL.weekContains(ACTIVE_SCHEDULE_WEEK, maxDateRep) > -1) {
           toast("No more entries");
           return;
         }
@@ -212,36 +219,78 @@
         ACTIVE_SCHEDULE_WEEK = TEMPORAL.prevWeek(ACTIVE_SCHEDULE_WEEK[0]);
       }
       //
+      var todayRep = TEMPORAL.format(TEMPORAL.today());
       var subHeader = TEMPORAL.shortFormat(ACTIVE_SCHEDULE_WEEK[0]) + " to " + TEMPORAL.shortFormat(ACTIVE_SCHEDULE_WEEK[6]);
       text("#schedule div.sub-center", subHeader);
-      html("#schedule div.schedule-section", scheduleEntryHtml(ACTIVE_SCHEDULE_WEEK));
+      if (TEMPORAL.weekContains(ACTIVE_SCHEDULE_WEEK,todayRep) > -1) {
+        addClass("#schedule div.sub-center", "sub-center-active");
+        removeClass("#schedule div.sub-left", "text-icon-active");
+        addClass("#schedule div.sub-left", "text-icon-inactive");
+      } else {
+        removeClass("#schedule div.sub-center", "sub-center-active");
+        removeClass("#schedule div.sub-left", "text-icon-inactive");
+        addClass("#schedule div.sub-left", "text-icon-active");
+      }
+      if (TEMPORAL.weekContains(ACTIVE_SCHEDULE_WEEK, maxDateRep) > -1) {
+        removeClass("#schedule div.sub-right", "text-icon-active");
+        addClass("#schedule div.sub-right", "text-icon-inactive");
+      } else {
+        removeClass("#schedule div.sub-right", "text-icon-inactive");
+        addClass("#schedule div.sub-right", "text-icon-active");
+      }
+      ACTIVE_SCHEDULE_WEEK.forEach(function(e,i) {
+        text("#entry_" + i + " div.entry-date", TEMPORAL.shortFormat(e));
+        html("#entry_" + i + " div.entry-rhs", getSheduledHtml(SERVICE.getScheduled()));
+        if (e === todayRep) {
+          addClass("#entry_" + i + " div.entry-lhs", "current");
+        } else {
+          removeClass("#entry_" + i + " div.entry-lhs", "current");
+        }
+      });
+      //
       document.querySelector("#body_top").scrollIntoView();
     }
     //
-    function scheduleEntryHtml(week) {
+    function getSheduledHtml(scheduledArray) {
       var html = "";
-      var today = TEMPORAL.format(TEMPORAL.today());
-      week.forEach(function(e) {
-        html += "<div class=\"entry";
-        html += (e === today) ? " current" : "";
-        html += "\">"
-        html += "<div class=\"\">" + TEMPORAL.longFormat(e) + "</div>";
-
-        html += "<div class=\"\">" + getScheduledHtml(getScheduled()) + "</div>";
-
+      scheduledArray.forEach(function(e) {
+        html += "<div class=\"entry-person\">";
+        html += "<img class=\"schedule-entry-pic\" src=\"" + DATA["PEOPLE"][e]["pic"] + "\" />";
+        html += "<div class=\"schedule-entry-name\">" + DATA["PEOPLE"][e]["name"] + "</div>";
         html += "</div>";
       });
       return html;
     }
     //
-    function getScheduledHtml(scheduledArray) {
-      var html = "";
-      scheduledArray.forEach(function(e) {
-        html += DATA["PEOPLE"][e]["name"];
-        html += "<img src=\"" + DATA["PEOPLE"][e]["pic"] + "\" />";
-      });
-
-      return html;
+    function setupReportView(offset) {
+      var activeSectionRef = document.querySelector(".chart-section.show");
+      if (typeof offset === "undefined" || offset === 0) {
+        // first time into view, setup swipe
+        var onSwipeCallback = function(evt, dir, phase, swipetype, distance) {
+          if (swipetype === "left") {
+            UI.event("report_view_change", -1);
+          } else if (swipetype === "right") {
+            UI.event("report_view_change", +1);
+          }
+        };
+        SWIPER.init("#body_section", onSwipeCallback);
+      } else {
+        // on activeSectionRef, add "hide", remove "show"
+        addClass(activeSectionRef, "hide");
+        removeClass(activeSectionRef, "show");
+        // get currentActiveSectionId
+        var currentId = activeSectionRef.getAttribute("id");
+        currentId = parseInt(currentId.substring(currentId.indexOf("_")+1));
+        // calculate new activeSectionId
+        var newActiveSectionId = (3 + currentId + offset) % 3;
+        // set it as activeSectionRef
+        activeSectionRef = document.querySelector("#section_" + newActiveSectionId);
+        // on activeSectionRef, remove "hide" add "show"
+        removeClass(activeSectionRef, "hide");
+        addClass(activeSectionRef, "show");
+      }
+      text("#reports div.sub-center", activeSectionRef.getAttribute("data-title"));
+      document.querySelector("#body_top").scrollIntoView();
     }
     //
     function mainMenuItemClicked(params) {
@@ -539,6 +588,25 @@
     }
   })(); // SWIPER
 
+  var SERVICE = (function() {
+    //
+    function getTemperatures() {
+      return {"high": getRandomArbitrary(70,54), "low": getRandomArbitrary(50,39)};
+    }
+    //
+    function getScheduled() {
+      var schedules = [
+        [0,1],[2,3],[1,5,6],[2,4,6],[4],[1],[2],[6],[3,6],[1,3],[5],[1,2,3],[0],[0,2,4],[0,1],[2,6],[1,3,4],[3,5],[1,4],[2,5]
+      ];
+      return schedules[Math.floor(Math.random()*schedules.length)];
+    }
+    //
+    return {
+      getTemperatures : getTemperatures,
+      getScheduled : getScheduled
+    }
+  })(); // SERVICE
+
 
 /**
  * Helper utilities
@@ -641,26 +709,3 @@ function getRandomArbitrary(min, max) {
   return Math.round(Math.random() * (max - min) + min);
 }
 /* Helper utilities */
-
-/* services */
-function getTemperatures() {
-  return {"high": getRandomArbitrary(70,54), "low": getRandomArbitrary(50,39)};
-}
-//
-function getScheduled() {
-  var schedules = [
-    [0,1],[2,3],[1,5,6],[2,4,6],[4],[1],[2],[6],[3,6],[1,3],[5],[1,2,3],[0],[0,2,4],[0,1],[2,6],[1,3,4],[3,5],[1,4],[2,5]
-  ];
-  return schedules[Math.floor(Math.random()*schedules.length)];
-}
-//
-/* services */
-
-
-
-
-
-
-
-
-

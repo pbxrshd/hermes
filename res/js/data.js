@@ -30,6 +30,7 @@ var DATA = {
     {"name" : "Sara", "pic" : "res/img/people/sara.jpg"},
     {"name" : "Shakira", "pic" : "res/img/people/shakira.jpg"}
   ],
+  "LOG_ATTRS" : ["weight","rodent","quail","remains","casts","feces","urates","attitude","cleaning","water","exercise","weather"],
   "LOG_CONTROLS" : {
     "weight" : {"min":50,"max":100},
     "rodent" : {"min":0,"max":8},
@@ -128,6 +129,9 @@ var DATA = {
       "exercise" : "weathered",
       "weather" : "sunny"
     }
+  },
+  "SCHEDULE" : {
+    "maxDate" : "2016-12-20"
   }
 
 }
