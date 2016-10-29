@@ -194,6 +194,7 @@
       if (typeof offset === "undefined" || offset === 0) {
         // first time into view, setup swipe
         ACTIVE_SCHEDULE_WEEK = TEMPORAL.thisWeek();
+        /*
         var onSwipeCallback = function(evt, dir, phase, swipetype, distance) {
           if (swipetype === "left") {
             UI.event("schedule_view_change", -1);
@@ -202,6 +203,7 @@
           }
         };
         SWIPER.init("#body_section", onSwipeCallback);
+        */
       }
       //
       var maxDateRep = DATA.SCHEDULE.maxDate;
@@ -266,6 +268,7 @@
       var activeSectionRef = document.querySelector(".chart-section.show");
       if (typeof offset === "undefined" || offset === 0) {
         // first time into view, setup swipe
+        /*
         var onSwipeCallback = function(evt, dir, phase, swipetype, distance) {
           if (swipetype === "left") {
             UI.event("report_view_change", -1);
@@ -274,6 +277,7 @@
           }
         };
         SWIPER.init("#body_section", onSwipeCallback);
+        */
       } else {
         // on activeSectionRef, add "hide", remove "show"
         addClass(activeSectionRef, "hide");
@@ -290,7 +294,7 @@
         addClass(activeSectionRef, "show");
       }
       text("#reports div.sub-center", activeSectionRef.getAttribute("data-title"));
-      document.querySelector("#body_top").scrollIntoView();
+      //document.querySelector("#body_top").scrollIntoView();
     }
     //
     function mainMenuItemClicked(params) {
