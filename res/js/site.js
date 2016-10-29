@@ -72,7 +72,7 @@
         html += " not-done";
       }
       html += "\" onclick=\"UI.event('raptor_detail','" + id + "')\">";
-      html += "<div class=\"pic\"><img src=\"res/img/raptors/TN_" + id + ".jpg\" class=\"pic\" /></div>";
+      html += "<div class=\"pic\"><img src=\"res/img/raptors/" + id + ".jpg\" class=\"pic\" /></div>";
       html += "<div class=\"l1\">" + DATA.RAPTORS[id].name + "</div>";
       html += "<div class=\"l2\">Last Entry:</div>";
       html += "<div class=\"l3\">";

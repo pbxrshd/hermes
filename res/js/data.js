@@ -2,23 +2,23 @@ var DATA = {
   "RAPTORS" : {
     "RTH" : {
       "name" : "Red-Tailed Hawk",
-      "pic" : "res/img/raptors/TN_RTH.jpg"
+      "pic" : "res/img/raptors/RTH.jpg"
     },
     "GHO" : {
       "name" : "Great Horned Owl",
-      "pic" : "res/img/raptors/TN_GHO.jpg"
+      "pic" : "res/img/raptors/GHO.jpg"
     },
     "AK" : {
       "name" : "American Kestrel",
-      "pic" : "res/img/raptors/TN_AK.jpg"
+      "pic" : "res/img/raptors/AK.jpg"
     },
     "BO" : {
       "name" : "Barred Owl",
-      "pic" : "res/img/raptors/TN_BO.jpg"
+      "pic" : "res/img/raptors/BO.jpg"
     },
     "WSO" : {
       "name" : "Western Screech Owl",
-      "pic" : "res/img/raptors/TN_WSO.jpg"
+      "pic" : "res/img/raptors/WSO.jpg"
     }
   },
   "PEOPLE" : [
