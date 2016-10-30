@@ -73,7 +73,7 @@
       }
       html += "\" onclick=\"UI.event('raptor_detail','" + id + "')\">";
       html += "<div class=\"pic\"><img src=\"res/img/raptors/" + id + ".jpg\" class=\"pic\" /></div>";
-      html += "<div class=\"l1\">" + DATA.RAPTORS[id].name + "</div>";
+      html += "<div class=\"l1\">" + DATA.RAPTORS[id].name + "<span class=\"text-icon text-icon-active\">&gt;</span></div>";
       html += "<div class=\"l2\">Last Entry:</div>";
       html += "<div class=\"l3\">";
       html += ("Today" === DATA.LOG[id].date) ? TEMPORAL.longFormat(TEMPORAL.today()) : TEMPORAL.longFormat(TEMPORAL.yesterday());
