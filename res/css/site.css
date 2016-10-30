@@ -177,8 +177,6 @@ a.main-menu-item {
 
 /* #raptor-detail view */
 #raptor_detail div.body-header {
-  border: 1px solid #c0c0c0;
-  border-radius: 6px;
   margin: 8px 0px 20px 12px;
   width: 90%;
   padding: 8px 12px 10px 0px;
@@ -205,7 +203,7 @@ a.main-menu-item {
   display: inline-block;
   width: 58%;
   font-size: 80%;
-  border-bottom: 1px solid #c0c0c0;
+  border-bottom: 1px solid #fbb258;
   margin: 0px 0px 4px 24px;
 }
 #raptor_detail div.body-header div.header-value {
