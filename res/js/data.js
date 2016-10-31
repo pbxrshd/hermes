@@ -32,11 +32,11 @@ var DATA = {
   ],
   "LOG_ATTRS" : ["weight","rodent","quail","remains","casts","feces","urates","attitude","cleaning","water","exercise","weather"],
   "LOG_CONTROLS" : {
-    "weight" : {"min":50,"max":100},
-    "rodent" : {"min":0,"max":8},
-    "quail" : {"min":0,"max":4},
-    "remains" : {"min":0,"max":8},
-    "casts" : {"min":0,"max":8},
+    "weight" : {"min":50,"max":100,"hint":""},
+    "rodent" : {"min":0,"max":8,"hint":""},
+    "quail" : {"min":0,"max":4,"hint":""},
+    "remains" : {"min":0,"max":8,"hint":""},
+    "casts" : {"min":0,"max":8,"hint":""},
     //"feces" : {"values":[["normal","abnormal"]]},
     //"urates" : {"values":[["normal","abnormal"]]},
     //"attitude" : {"values":[["aware","unaware"],["responsive","unresponsive"],["quiet","vocal"],"agressive","puffed up","weak","stressed"]},
@@ -44,13 +44,13 @@ var DATA = {
     //"water" : {"values":[["did not change","fresh water"]]},
     //"exercise" : {"values":[["indoor","weathered","walked","at program"]]},
     //"weather" : {"values":["sunny","windy","humid","rain","snow","ice"]}
-    "feces" : {"values":["normal","abnormal"]},
-    "urates" : {"values":["normal","abnormal"]},
-    "attitude" : {"values":["aware","unaware","responsive","unresponsive","quiet","vocal","agressive","puffed up","weak","stressed"]},
-    "cleaning" : {"values":["spot cleaned","deep cleaned"]},
-    "water" : {"values":["did not change","fresh water"]},
-    "exercise" : {"values":["indoor","weathered","walked","at program"]},
-    "weather" : {"values":["sunny","windy","humid","rain","snow","ice"]}
+    "feces" : {"values":["normal","abnormal"],"hint":""},
+    "urates" : {"values":["normal","abnormal"],"hint":""},
+    "attitude" : {"values":["aware","unaware","responsive","unresponsive","quiet","vocal","agressive","puffed up","weak","stressed"],"hint":""},
+    "cleaning" : {"values":["spot cleaned","deep cleaned"],"hint":""},
+    "water" : {"values":["did not change","fresh water"],"hint":""},
+    "exercise" : {"values":["indoor","weathered","walked","at program"],"hint":""},
+    "weather" : {"values":["sunny","windy","humid","rain","snow","ice"],"hint":""}
   },
 
   "LOG" : {
@@ -74,7 +74,7 @@ var DATA = {
       "weight" : "95",
       "rodent" : "2",
       "quail" : "1",
-      "remains" : "12",
+      "remains" : "8",
       "casts" : "2",
       "feces" : "",
       "urates" : "normal",
