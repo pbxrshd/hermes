@@ -110,8 +110,13 @@
       hide("#main_header");
       show("#modal_header");
       text("#log_control_modal .modal-header-title", ACTIVE_LOG_CONTROL);
+      text("#log_control_modal .header-sub", DATA.LOG_CONTROLS[ACTIVE_LOG_CONTROL].hint);
       html("#log_control_modal ul", getLogControlHtml(ACTIVE_LOG_CONTROL));
       show("#log_control_modal");
+      var checkedItem = document.querySelector("li.item-check");
+      if (checkedItem) {
+        checkedItem.scrollIntoView();
+      }
     }
     //
     function logModalHeaderClicked(params) {

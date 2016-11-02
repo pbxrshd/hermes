@@ -32,7 +32,11 @@
 </div><!-- body-section  -->
 
 <script>
+  try {
   UI.init("Raptors");
+  } catch (e) {
+    alert(e);
+  }
 </script>
 </body>
 </html>

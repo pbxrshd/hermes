@@ -255,7 +255,7 @@ a.main-menu-item {
   position: fixed;
   left: 0;
   top: 0;
-  height: 60px;
+  height: 76px;
   width: 100%;
   text-align:center;
   font-weight: normal;
@@ -266,7 +266,7 @@ a.main-menu-item {
   background-color: #ECF0F1;
   position: fixed;
   left: 0px;
-  top: 60px;
+  top: 76px;
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -295,6 +295,16 @@ a.main-menu-item {
   font-size: 84%;
   color: #808080;
   font-style: italic;
+  animation-name: notify1;
+  animation-duration: 0.5s;
+}
+@keyframes notify1 {
+    from {color: #808080;}
+    to {color: #dcdcdc;}
+}
+@-webkit-keyframes notify1 {
+    from {color: #808080;}
+    to {color: #dcdcdc;}
 }
 #log_control_modal li {
   list-style-type: none;
@@ -312,7 +322,6 @@ a.main-menu-item {
   position: absolute;
   top: 0px;
   left: 2px;
-  opacity: 0.6;
 }
 /* schedule view */
 #schedule div.schedule-entry {

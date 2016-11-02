@@ -32,11 +32,11 @@ var DATA = {
   ],
   "LOG_ATTRS" : ["weight","rodent","quail","remains","casts","feces","urates","attitude","cleaning","water","exercise","weather"],
   "LOG_CONTROLS" : {
-    "weight" : {"min":50,"max":100,"hint":""},
-    "rodent" : {"min":0,"max":8,"hint":""},
-    "quail" : {"min":0,"max":4,"hint":""},
-    "remains" : {"min":0,"max":8,"hint":""},
-    "casts" : {"min":0,"max":8,"hint":""},
+    "weight" : {"min":50,"max":100,"hint":"What is the weight of the raptor today (in grams)?"},
+    "rodent" : {"min":0,"max":8,"hint":"How much rodent are we feeding today (in grams)?"},
+    "quail" : {"min":0,"max":4,"hint":"How much quail are we feeding today (in grams)?"},
+    "remains" : {"min":0,"max":8,"hint":"What is the weight of food left over (in grams)?"},
+    "casts" : {"min":0,"max":8,"hint":"How many casts or pellets were found?"},
     //"feces" : {"values":[["normal","abnormal"]]},
     //"urates" : {"values":[["normal","abnormal"]]},
     //"attitude" : {"values":[["aware","unaware"],["responsive","unresponsive"],["quiet","vocal"],"agressive","puffed up","weak","stressed"]},
@@ -44,13 +44,13 @@ var DATA = {
     //"water" : {"values":[["did not change","fresh water"]]},
     //"exercise" : {"values":[["indoor","weathered","walked","at program"]]},
     //"weather" : {"values":["sunny","windy","humid","rain","snow","ice"]}
-    "feces" : {"values":["normal","abnormal"],"hint":""},
-    "urates" : {"values":["normal","abnormal"],"hint":""},
-    "attitude" : {"values":["aware","unaware","responsive","unresponsive","quiet","vocal","agressive","puffed up","weak","stressed"],"hint":""},
-    "cleaning" : {"values":["spot cleaned","deep cleaned"],"hint":""},
-    "water" : {"values":["did not change","fresh water"],"hint":""},
-    "exercise" : {"values":["indoor","weathered","walked","at program"],"hint":""},
-    "weather" : {"values":["sunny","windy","humid","rain","snow","ice"],"hint":""}
+    "feces" : {"values":["normal","abnormal"],"hint":"What does the feces look like?"},
+    "urates" : {"values":["normal","abnormal"],"hint":"What do the urates look like?"},
+    "attitude" : {"values":["aware","unaware","responsive","unresponsive","quiet","vocal","agressive","puffed up","weak","stressed"],"hint":"How is the raptor behaving?"},
+    "cleaning" : {"values":["spot cleaned","deep cleaned"],"hint":"How was the enclosure cleaned today? "},
+    "water" : {"values":["did not change","fresh water"],"hint":"Was the water changed today?"},
+    "exercise" : {"values":["indoor","weathered","walked","at program"],"hint":"How was the raptor exercised today?"},
+    "weather" : {"values":["sunny","windy","humid","rain","snow","ice"],"hint":"What were the weather conditions today?"}
   },
 
   "LOG" : {
